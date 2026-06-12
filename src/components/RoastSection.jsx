@@ -195,7 +195,7 @@ export default function RoastSection({ onEntryAdded, onMascotStateChange }) {
             {validationError ? <p className="inline-error">{validationError}</p> : null}
           </div>
           <button className="primary-button" type="submit" disabled={isLoading}>
-            {isLoading ? 'Roasting...' : 'Roast Me'}
+            {isLoading ? 'Sending...' : 'Send'}
           </button>
         </div>
       </form>
