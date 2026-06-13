@@ -12,7 +12,7 @@ const KIMI_API_KEY = import.meta.env.VITE_KIMI_API_KEY
 const USE_CLIENT_KIMI_KEY = KIMI_BASE_URL === '/kimi-api' || KIMI_BASE_URL.startsWith('http')
 
 export const ROAST_ERROR_MESSAGE =
-  'bestie i crashed out. check your connection and try again 💀'
+  'bro i crashed out. check your connection and try again 💀'
 
 const SYSTEM_PROMPT = `You are PivotOrPerish — a brutally honest, unfiltered startup idea evaluator with deep knowledge of venture capital, product-market fit, unit economics, competitive moats, and go-to-market strategy. You communicate entirely in Gen Z internet slang and you do not sugarcoat anything. You can curse naturally (shit, damn, wtf, bullshit, ass, etc.) but do not overdo it — the humor comes from the analysis, not just the swearing.
 

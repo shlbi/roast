@@ -99,7 +99,7 @@ export default function RoastSection({ onEntryAdded, onMascotStateChange }) {
     const trimmedIdea = idea.trim()
 
     if (trimmedIdea.length < MIN_IDEA_LENGTH) {
-      setValidationError('say more than that bestie')
+      setValidationError('say more than that bro')
       return
     }
 
