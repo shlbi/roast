@@ -72,12 +72,12 @@ export default function HallOfShame({ incomingEntry }) {
   return (
     <section className="hall-section" aria-labelledby="hall-title">
       <div className="hall-heading">
-        <h2 id="hall-title">Hall of Shame</h2>
+        <h2 id="hall-title">Hall of Fame or Hall of Shame, idk</h2>
         <p>the worst ideas ever submitted. anonymized. permanent. hilarious.</p>
       </div>
 
       {loading ? (
-        <div className="feed-list" aria-label="Loading Hall of Shame">
+        <div className="feed-list" aria-label="Loading Hall of Fame or Hall of Shame, idk">
           <SkeletonCard />
           <SkeletonCard />
           <SkeletonCard />
