@@ -44,3 +44,15 @@ export function truncateAtWord(str, maxChars) {
   const lastSpace = truncated.lastIndexOf(' ')
   return `${lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated}...`
 }
+
+const BANNED_ADDRESS_TERM = new RegExp(`\\b${'bes'}${'tie'}\\b`, 'gi')
+
+export function replaceBannedAddressWithBro(str) {
+  if (typeof str !== 'string') return str
+
+  return str.replace(BANNED_ADDRESS_TERM, (match) => {
+    if (match === match.toUpperCase()) return 'BRO'
+    if (match[0] === match[0].toUpperCase()) return 'Bro'
+    return 'bro'
+  })
+}

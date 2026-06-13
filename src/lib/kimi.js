@@ -2,6 +2,7 @@ import {
   extractFixable,
   extractScore,
   extractVerdict,
+  replaceBannedAddressWithBro,
   stripScoreLine
 } from './parse.js'
 
@@ -46,6 +47,7 @@ RULES:
 - Never output markdown headers with # symbols
 - Never use em dashes (—) except in the final SCORE line
 - The SCORE line must always be the last line
+- Use "bro" for every direct-address nickname.
 - Score rubric: 1-2 = criminally bad, 3-4 = cooked but maybe 1 pivot saves it, 5-6 = mid but workable, 7-8 = lowkey solid, 9-10 = actually built different (rare, use sparingly)
 - Keep total response under 1000 characters`
 
@@ -87,7 +89,7 @@ export async function callRoastAPI(ideaText, { onText } = {}) {
       throw new Error(`Kimi API failed with status ${response.status}`)
     }
 
-    const roastText = await readKimiStream(response, onText)
+    const roastText = replaceBannedAddressWithBro(await readKimiStream(response, onText))
     const score = extractScore(roastText)
     const verdict = extractVerdict(roastText)
     const fixable = extractFixable(roastText)
@@ -175,7 +177,7 @@ function processKimiStreamEvent(event, onText) {
       const choices = Array.isArray(parsed?.choices) ? parsed.choices : []
 
       for (const choice of choices) {
-        const content = extractDeltaContent(choice?.delta)
+        const content = replaceBannedAddressWithBro(extractDeltaContent(choice?.delta))
 
         if (content) {
           eventText += content

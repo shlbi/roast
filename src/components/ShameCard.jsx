@@ -1,12 +1,13 @@
 import { formatDistanceToNow } from 'date-fns'
 import ScorePill from './ScorePill.jsx'
+import { replaceBannedAddressWithBro } from '../lib/parse.js'
 
 export default function ShameCard({ entry, isFresh }) {
   return (
     <article className={`shame-card ${isFresh ? 'fresh' : ''}`}>
       <ScorePill score={entry.score} />
-      <h3>{entry.idea_excerpt}</h3>
-      <p className="roast-excerpt">{entry.roast_excerpt}</p>
+      <h3>{replaceBannedAddressWithBro(entry.idea_excerpt)}</h3>
+      <p className="roast-excerpt">{replaceBannedAddressWithBro(entry.roast_excerpt)}</p>
       <time dateTime={entry.created_at}>{formatRelativeTime(entry.created_at)}</time>
     </article>
   )

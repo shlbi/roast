@@ -1,8 +1,10 @@
+import { replaceBannedAddressWithBro } from '../lib/parse.js'
+
 export default function ScorePill({ score, verdict }) {
   return (
     <div className="score-row">
       <span className={`score-pill ${getScoreTone(score)}`}>{score}/10</span>
-      {verdict ? <span className="score-verdict">{verdict}</span> : null}
+      {verdict ? <span className="score-verdict">{replaceBannedAddressWithBro(verdict)}</span> : null}
     </div>
   )
 }
