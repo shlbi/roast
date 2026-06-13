@@ -7,8 +7,9 @@ import {
 
 export const KIMI_MODEL = import.meta.env.VITE_KIMI_MODEL || 'kimi-k2.6'
 
-const KIMI_BASE_URL = (import.meta.env.VITE_KIMI_BASE_URL || '/kimi-api').replace(/\/$/, '')
+const KIMI_BASE_URL = resolveKimiBaseUrl()
 const KIMI_API_KEY = import.meta.env.VITE_KIMI_API_KEY
+const USE_CLIENT_KIMI_KEY = KIMI_BASE_URL === '/kimi-api' || KIMI_BASE_URL.startsWith('http')
 
 export const ROAST_ERROR_MESSAGE =
   'bestie i crashed out. check your connection and try again 💀'
@@ -49,7 +50,7 @@ RULES:
 - Keep total response under 1000 characters`
 
 export async function callRoastAPI(ideaText, { onText } = {}) {
-  if (!KIMI_API_KEY) {
+  if (USE_CLIENT_KIMI_KEY && !KIMI_API_KEY) {
     console.error('Missing VITE_KIMI_API_KEY.')
     throw new Error('Missing VITE_KIMI_API_KEY')
   }
@@ -58,7 +59,7 @@ export async function callRoastAPI(ideaText, { onText } = {}) {
     const response = await fetch(`${KIMI_BASE_URL}/chat/completions`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${KIMI_API_KEY}`,
+        ...getKimiAuthHeader(),
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -103,6 +104,21 @@ export async function callRoastAPI(ideaText, { onText } = {}) {
     console.error('Kimi roast request failed.', error)
     throw error
   }
+}
+
+function resolveKimiBaseUrl() {
+  const configuredBaseUrl = import.meta.env.VITE_KIMI_BASE_URL
+
+  if (import.meta.env.PROD && (!configuredBaseUrl || configuredBaseUrl === '/kimi-api')) {
+    return '/api/kimi'
+  }
+
+  return (configuredBaseUrl || '/kimi-api').replace(/\/$/, '')
+}
+
+function getKimiAuthHeader() {
+  if (!USE_CLIENT_KIMI_KEY) return {}
+  return { Authorization: `Bearer ${KIMI_API_KEY}` }
 }
 
 async function readKimiStream(response, onText) {
